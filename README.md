@@ -2,7 +2,7 @@
 
 CodePath WEB103 Final Project
 
-Designed and developed by: Krish Patel, Tasmia Chowdhury, and Ryan Lov
+Designed and developed by: Krish A. Patel, Tasmia Chowdhury, and Ryan Lov
 
 🔗 **Link to deployed app:** TBD
 
