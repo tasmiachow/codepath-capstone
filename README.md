@@ -61,7 +61,7 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
 | **Keyphrase Memorization** | Display random phrase, hide, user types from memory. | Working memory     |
 | **Name/Face Matching**     | Match random names with generated faces.             | Associative memory |
 | **Quick Math**             | Timed +, −, ×, ÷ problems.                           | Speed & accuracy   |
-| **Color Stroop Test**      | Choose color of the word instead of reading it.      | Cognitive control  |
+| **Color Stroop Test (Stretch)**      | Choose color of the word instead of reading it.      | Cognitive control  |
 
 ---
 
@@ -87,6 +87,15 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
   - Composite metric combining accuracy × speed × consistency.
 
 ---
+## IMPORTANT NOTE- UNIT 6: 
+ - **GROUP REFLECTION** - in Milestones Folder
+ ```bash 
+      cd milestones 
+```
+ - **USER ROLES/USER STORIES** - in Planning  Folder 
+ ```bash 
+      cd planning  
+```
 
 ## 🌟 Future Enhancements
 
