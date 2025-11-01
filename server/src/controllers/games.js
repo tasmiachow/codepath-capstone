@@ -11,7 +11,7 @@ const getGames = async (req, res) => {
 
 const getGame = async (req, res) => {
     try {
-        const gameId = parseInt(req.params.id);
+        const gameId = parseInt(req.params.game_id);
 
         if (isNaN()) {
             throw new Error('game_id must be a valid integer.');
