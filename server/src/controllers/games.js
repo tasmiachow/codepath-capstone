@@ -13,8 +13,8 @@ const getGame = async (req, res) => {
     try {
         const gameId = parseInt(req.params.game_id);
 
-        if (isNaN()) {
-            throw new Error('game_id must be a valid integer.');
+        if (isNaN(gameId)) {
+            throw new Error('`game_id` must be a valid integer.');
         }
 
         const data = await pool.query(`
@@ -23,7 +23,7 @@ const getGame = async (req, res) => {
         `, [gameId])
         res.status(200).json({ data: data.rows[0] });
     } catch (error) {
-        res.status(409).json({ error: error.messages });
+        res.status(409).json({ error: error.message });
     }
 };
 
