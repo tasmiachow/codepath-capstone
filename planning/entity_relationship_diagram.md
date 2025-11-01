@@ -1,5 +1,7 @@
 # Entity Relationship Diagram (ERD)
 
+![Entity relationship diagram for our project](./erd.png)
+
 ## 🧩 Database Schema
 
 ### `users` Table
