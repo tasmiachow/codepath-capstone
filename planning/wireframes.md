@@ -16,22 +16,22 @@ Reference the Creating an Entity Relationship Diagram final project guide in the
 [👉🏾👉🏾👉🏾 List the pages you expect to have in your app, with a ⭐ next to pages you have wireframed]
 
 ## Wireframe 1: [HomePage]
-<img src ="/wireframes/homePage.png">
+<img src ="./wireframes/homePage.png">
 
 ## Wireframe 2: [LogIn_SignUp]
-<img src ="/wireframes/login_signup.png">
+<img src ="./wireframes/login_signup.png">
 
 ## Wireframe 3: [LicensePlate]
-<img src ="/wireframes/licensePlate.png">
+<img src ="./wireframes/licensePlate.png">
 
 ## Wireframe 4: [MemoryTiles]
-<img src ="/wireframes/memTiles.png">
+<img src ="./wireframes/memTiles.png">
 
 ## Wireframe 5: [QuickMath]
-<img src ="/wireframes/quickMath.png">
+<img src ="./wireframes/quickMath.png">
 
 ## Wireframe 6: [DashBoard_web]
-<img src ="/wireframes/userDashboard.png">
+<img src ="./wireframes/userDashboard.png">
 
 ## Wireframe 7: [DashBoard_mobile]
-<img src ="/wireframes/mobileDash.png">
+<img src ="./wireframes/mobileDash.png">
