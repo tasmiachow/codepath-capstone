@@ -58,10 +58,7 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
 | -------------------------- | ---------------------------------------------------- | ------------------ |
 | **Memory Tiles**           | Flip and match pairs.                                | Short-term memory  |
 | **License Plate Recall**   | Show a random plate for 3 seconds, user retypes it.  | Visual recall      |
-| **Keyphrase Memorization** | Display random phrase, hide, user types from memory. | Working memory     |
-| **Name/Face Matching**     | Match random names with generated faces.             | Associative memory |
 | **Quick Math**             | Timed +, −, ×, ÷ problems.                           | Speed & accuracy   |
-| **Color Stroop Test**      | Choose color of the word instead of reading it.      | Cognitive control  |
 
 ---
 
