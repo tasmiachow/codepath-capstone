@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
 const SignInPage = () => {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [error, setError] = useState(null);
@@ -8,19 +10,24 @@ const SignInPage = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // <- important: stop the browser from doing a GET form submit
     setError(null);
     try {
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch(`${API_BASE}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        console.error("Non-JSON response:", text);
+        throw new Error("Unexpected server response");
+      }
       if (!res.ok) throw new Error(data.error || "Signup failed");
-      // store token or user
       localStorage.setItem("token", data.token);
-      // redirect or update app state
       window.location.href = "/";
     } catch (err) {
       setError(err.message);
