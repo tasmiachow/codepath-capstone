@@ -18,12 +18,13 @@ This unit, be sure to complete all tasks listed below. To complete a task, place
 
 ### 1. What went well during this unit?
 
-[👉🏾👉🏾👉🏾 your answer here]
+We planned out our project more in-depth, such as details about which columns in the database were superfluous and what we're going to use for authentication (Passport.js).
 
 ### 2. What were some challenges your group faced in this unit?
 
-[👉🏾👉🏾👉🏾 your answer here]
+A challenge we faced was deciding the long-term maintenance for our project. In the end we concluded that letting the Render database and web service expire after we take a demo video would be the best to prevent incurring costs while retaining some sort of window into the working product.
 
 ### 3. What additional support will you need in upcoming units as you continue to work on your final project?
 
-[👉🏾👉🏾👉🏾 your answer here]
+We'll just need general support about questions we might have, such as related to project requirements, etc.
+
