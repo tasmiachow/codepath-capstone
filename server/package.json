@@ -1,9 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "reset": "node --require dotenv/config ./src/config/reset.js",
+    "dev": "npm run reset && nodemon --require dotenv/config server.js",
+    "start": "node --require dotenv/config server.js"
   },
   "keywords": [],
   "author": "",
