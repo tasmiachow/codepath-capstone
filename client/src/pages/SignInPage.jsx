@@ -28,35 +28,57 @@ const SignInPage = () => {
   };
 
   return (
-    <div>
-      <h2>Create account</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="username"
-          placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Sign up</button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="hero bg-base-200 min-h-screen">
+      <div className="hero-content flex-col lg:flex-col">
+        <div className="text-center lg:text-left">
+          <h1 className="text-5xl font-bold">Sign Up</h1>
+        </div>
+        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+          <div className="card-body">
+            <form onSubmit={handleSubmit} className="space-y-4 m-2">
+              <label className="label">Username</label>
+              <input
+                name="username"
+                type="text"
+                className="input"
+                placeholder="Username"
+                value={form.username}
+                onChange={handleChange}
+                required
+              />
+              <label className="label">Email</label>
+              <input
+                name="email"
+                type="email"
+                className="input"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+              <label className="label">Password</label>
+              <input
+                name="password"
+                type="password"
+                className="input"
+                placeholder="Password"
+                value={form.password}
+                onChange={handleChange}
+                required
+              />
+              <div className="flex justify-between">
+                <a className="link link-hover" href="/login">
+                  Already have an account?
+                </a>
+              </div>
+              <button className="btn btn-neutral mt-4 " type="submit">
+                Sign Up
+              </button>
+            </form>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
