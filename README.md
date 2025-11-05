@@ -84,6 +84,15 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
   - Composite metric combining accuracy × speed × consistency.
 
 ---
+## IMPORTANT NOTE- UNIT 6: 
+ - **GROUP REFLECTION** - in Milestones Folder
+ ```bash 
+      cd milestones 
+```
+ - **USER ROLES/USER STORIES** - in Planning  Folder 
+ ```bash 
+      cd planning  
+```
 
 ## 🌟 Future Enhancements
 
