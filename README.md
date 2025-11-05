@@ -1,4 +1,4 @@
-# 🧠 Cognitive Game Dashboard
+# 🧠 Cognitive Game Dashboard (CogPath)
 
 CodePath WEB103 Final Project
 
@@ -84,15 +84,18 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
   - Composite metric combining accuracy × speed × consistency.
 
 ---
-## IMPORTANT NOTE- UNIT 6: 
+## IMPORTANT NOTE- UNIT 7: 
  - **GROUP REFLECTION** - in Milestones Folder
  ```bash 
       cd milestones 
 ```
- - **USER ROLES/USER STORIES** - in Planning  Folder 
+ - **WireFrames / ERD Diagram** - in Planning  Folder 
  ```bash 
       cd planning  
 ```
+**SlideDeck Pitch**
+[SlideDeck](https://docs.google.com/presentation/d/11BlSJisZOn-BW06ZDgSuXEPI3JMgUl6OeJ7PxeARAbM/edit?usp=sharing)
+
 
 ## 🌟 Future Enhancements
 
