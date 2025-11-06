@@ -28,7 +28,7 @@ const SignInPage = () => {
       }
       if (!res.ok) throw new Error(data.error || "Signup failed");
       localStorage.setItem("token", data.token);
-      window.location.href = "/";
+      window.location.href = "/dashboard";
     } catch (err) {
       setError(err.message);
     }

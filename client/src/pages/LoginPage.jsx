@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
 
@@ -10,7 +11,7 @@ const LoginPage = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // required
+    e.preventDefault();
     setError(null);
     try {
       const res = await fetch(`${API_BASE}/api/auth/login`, {
@@ -18,22 +19,29 @@ const LoginPage = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+
       const text = await res.text();
       let data;
       try {
         data = JSON.parse(text);
       } catch {
-        console.error("Non-JSON response", text);
+        console.error("Non-JSON response:", text);
         throw new Error("Unexpected server response");
       }
-      if (!res.ok) throw new Error(data.error || "Request failed");
+
+      console.log("login response:", res.status, data);
+
+      if (!res.ok) throw new Error(data?.error || "Login failed");
+      if (!data?.token) throw new Error("No token returned from server");
+
       localStorage.setItem("token", data.token);
-      window.location.href = "/";
+      // navigate after token is stored
+      navigate("/dashboard", { replace: true });
     } catch (err) {
+      console.error("login error:", err);
       setError(err.message);
     }
   };
-
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">

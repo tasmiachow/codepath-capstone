@@ -94,3 +94,8 @@ export const upsertUser = async (req, res) => {
     return res.status(500).json({ error: "internal server error" });
   }
 };
+
+export const me = async (req, res) => {
+  if (!req.user) return res.status(401).json({ error: "Not authenticated" });
+  return res.json({ user: req.user });
+};

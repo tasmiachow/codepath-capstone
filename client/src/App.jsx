@@ -1,21 +1,33 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
-//pages
+import RequireAuth from "./components/RequireAuth.jsx";
+
+import Layout from "./components/Layout.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
-import Navbar from "./components/Navbar.jsx";
-import HomePage from "./pages/HomePage.jsx";
+import DashboardPage from "./pages/DashboardPage.jsx";
+import GamesPage from "./pages/GamesPage.jsx";
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignInPage />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignInPage />} />
+          <Route
+            path="dashboard"
+            element={
+              <RequireAuth>
+                <DashboardPage />
+              </RequireAuth>
+            }
+          />
+          <Route path="games" element={<GamesPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
