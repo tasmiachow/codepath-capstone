@@ -1,51 +1,35 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
+import RequireAuth from "./components/RequireAuth.jsx";
 
+import Layout from "./components/Layout.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import SignInPage from "./pages/SignInPage.jsx";
+import DashboardPage from "./pages/DashboardPage.jsx";
+import GamesPage from "./pages/GamesPage.jsx";
+
+function App() {
   return (
-    <>
-      <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content text-center flex flex-col">
-          <div className="card bg-base-100 w-96 shadow-sm">
-            <figure>
-              <img
-                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                alt="Shoes"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">Card Title</h2>
-              <p>
-                A card component has a figure, a body part, and inside body
-                there are title and actions parts
-              </p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
-            </div>
-          </div>
-          <div className="max-w-md">
-            <h1>Vite + React</h1>
-            <div className="card">
-              <button
-                onClick={() => setCount((count) => count + 1)}
-                className="btn"
-              >
-                count is {count}
-              </button>
-              <p>
-                Edit <code>src/App.jsx</code> and save to test HMR
-              </p>
-            </div>
-            <p className="read-the-docs">
-              Click on the Vite and React logos to learn more
-            </p>
-          </div>
-        </div>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignInPage />} />
+          <Route
+            path="dashboard"
+            element={
+              <RequireAuth>
+                <DashboardPage />
+              </RequireAuth>
+            }
+          />
+          <Route path="games" element={<GamesPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
