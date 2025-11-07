@@ -1,4 +1,4 @@
-# 🧠 Cognitive Game Dashboard
+# 🧠 Cognitive Game Dashboard (CogPath)
 
 CodePath WEB103 Final Project
 
@@ -58,10 +58,7 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
 | -------------------------- | ---------------------------------------------------- | ------------------ |
 | **Memory Tiles**           | Flip and match pairs.                                | Short-term memory  |
 | **License Plate Recall**   | Show a random plate for 3 seconds, user retypes it.  | Visual recall      |
-| **Keyphrase Memorization** | Display random phrase, hide, user types from memory. | Working memory     |
-| **Name/Face Matching**     | Match random names with generated faces.             | Associative memory |
 | **Quick Math**             | Timed +, −, ×, ÷ problems.                           | Speed & accuracy   |
-| **Color Stroop Test (Stretch)**      | Choose color of the word instead of reading it.      | Cognitive control  |
 
 ---
 
@@ -87,15 +84,18 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
   - Composite metric combining accuracy × speed × consistency.
 
 ---
-## IMPORTANT NOTE- UNIT 6: 
+## IMPORTANT NOTE- UNIT 7: 
  - **GROUP REFLECTION** - in Milestones Folder
  ```bash 
       cd milestones 
 ```
- - **USER ROLES/USER STORIES** - in Planning  Folder 
+ - **WireFrames / ERD Diagram** - in Planning  Folder 
  ```bash 
       cd planning  
 ```
+**SlideDeck Pitch**
+[SlideDeck](https://docs.google.com/presentation/d/11BlSJisZOn-BW06ZDgSuXEPI3JMgUl6OeJ7PxeARAbM/edit?usp=sharing)
+
 
 ## 🌟 Future Enhancements
 
