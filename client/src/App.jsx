@@ -9,6 +9,12 @@ import LoginPage from "./pages/LoginPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import GamesPage from "./pages/GamesPage.jsx";
+import LicensePlateGame from "./components/games/LicensePlateGame.jsx";
+
+const GAME_ROUTES = {
+  // [gameId]: component
+  1: <LicensePlateGame />
+};
 
 function App() {
   return (
@@ -26,7 +32,12 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="games" element={<GamesPage />} />
+          <Route path="games">
+            <Route index element={<GamesPage />} />
+            {Object.entries(GAME_ROUTES).map(([gameId, component], index) => {
+              return <Route path={gameId} element={component} key={index} />;
+            })}
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
