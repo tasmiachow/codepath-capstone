@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 export default function RequireAuth({ children }) {
+  const { logout } = useAuth();
   const [status, setStatus] = useState("loading"); // 'loading' | 'ok' | 'unauth'
 
   useEffect(() => {
@@ -21,13 +23,13 @@ export default function RequireAuth({ children }) {
         if (!mounted) return;
         if (res.ok) setStatus("ok");
         else {
-          localStorage.removeItem("token");
+          logout();
           setStatus("unauth");
         }
       })
       .catch(() => {
         if (mounted) {
-          localStorage.removeItem("token");
+          logout();
           setStatus("unauth");
         }
       });

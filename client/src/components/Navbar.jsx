@@ -2,12 +2,15 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaGear } from "react-icons/fa6";
 import { IoIosLogIn } from "react-icons/io";
+import { useAuth } from "../AuthContext";
+
 const Navbar = () => {
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/");
   };
 

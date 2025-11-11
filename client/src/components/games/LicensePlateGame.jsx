@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { randomInt } from "../../util";
+import { useAuth } from "../../AuthContext";
 
 // game constants
-const NUM_ROUNDS = 5;
+const NUM_ROUNDS = 1;
 
 function LicensePlateGame() {
+  const { isAuthenticated, user } = useAuth();
+
   // stats
   const [round, setRound] = useState(1);
   const [numCorrect, setNumCorrect] = useState(0);
@@ -130,6 +133,8 @@ function LicensePlateGame() {
     setStage("finished");
 
     /* TODO: store results on database */
+    console.log(isAuthenticated);
+    console.log(user);
   };
 
   const renderBasedOnPlayingStage = () => {
