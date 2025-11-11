@@ -1,5 +1,5 @@
 [*]
 end_of_line = lf
 
-[*.jsx]
+[*.{jsx,css}]
 indent_size = 2
