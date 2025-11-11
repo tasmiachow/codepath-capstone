@@ -12,7 +12,7 @@ function LicensePlateGame() {
   // stats
   const [round, setRound] = useState(1);
   const [numCorrect, setNumCorrect] = useState(0);
-  const [time, setTime] = useState(0);
+  // const [time, setTime] = useState(0);
 
   // not playing, showing, guessing, evaluating, finished
   const [stage, setStage] = useState("not playing");
@@ -21,15 +21,35 @@ function LicensePlateGame() {
   const [showTime, setShowTime] = useState(INIT_SHOW_TIME);
   const [feedback, setFeedback] = useState(<></>);
 
-  const [timeInt, setTimeInt] = useState(0);
+  // const [timeInt, setTimeInt] = useState(0);
+  const [time, setTime] = useState(0);    // in ms
+  const [referenceTime, setReferenceTime] = useState(Date.now());
+  const [timerOn, setTimerOn] = useState(false);
 
-  // TODO - make component not rerender every time this changes!
-  const timer = () => {
-    setTime(currentTime => currentTime + 0.1);
+  const timerStep = () => {
+    setTime(prevTime => {
+      const now = Date.now();
+      const interval = now - referenceTime;
+      setReferenceTime(now);
+      return prevTime + interval;
+    });
   };
 
+  useEffect(() => {
+    console.log(timerOn);
+    if (timerOn) {
+      setTimeout(timerStep, 100);
+    }
+  }, [time, timerOn]);
+
+  // TODO - make component not rerender every time this changes!
+  // const timer = () => {
+  //   setTime(currentTime => currentTime + 0.1);
+  // };
+
   const beginGame = () => {
-    setTimeInt(setInterval(timer, 100));
+    // setTimeInt(setInterval(timer, 100));
+    setTimerOn(true);
     showPlateNumber();
   };
 
@@ -57,6 +77,7 @@ function LicensePlateGame() {
   };
 
   const formatTime = (time) => {
+    time = time / 1000;
     if (time >= 60) {
       const min = String(Math.floor(time / 60)).padStart(2, '0');
       const sec = String(Math.floor(time % 60)).padStart(2, '0');
@@ -74,7 +95,7 @@ function LicensePlateGame() {
       return "---"
     } else {
       const denom = (stage === "guessing" || stage === "showing") ? round - 1 : round;
-      return `${100 * numCorrect / denom}%`;
+      return `${Math.round((100 * numCorrect / denom) * 10) / 10}%`;
     }
   }
 
@@ -88,7 +109,8 @@ function LicensePlateGame() {
 
     // stop the timer
     if (round >= NUM_ROUNDS) {
-      clearInterval(timeInt);
+      // clearInterval(timeInt);
+      setTimerOn(false);
     }
 
     if (isGuessCorrect(guess, plate)) {
