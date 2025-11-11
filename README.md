@@ -60,6 +60,9 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
 | ✅ **License Plate Recall**   | Show a random plate for 3 seconds, user retypes it.  | Visual recall      |
 | **Quick Math**                | Timed +, −, ×, ÷ problems.                           | Speed & accuracy   |
 
+Demo of License Plate Recall:
+![License Plate Recall](./assets/License_Plate_Game_Demo_Web103_CapstoneProject.gif)
+
 ---
 
 ## 📊 Dashboard Insights
