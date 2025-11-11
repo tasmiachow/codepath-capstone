@@ -3,7 +3,7 @@ import { randomInt } from "../../util";
 import { useAuth } from "../../AuthContext";
 
 // game constants
-const NUM_ROUNDS = 1;
+const NUM_ROUNDS = 5;
 
 function LicensePlateGame({ gameId }) {
   const { isAuthenticated, user } = useAuth();
