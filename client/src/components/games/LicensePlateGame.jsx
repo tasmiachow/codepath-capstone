@@ -5,7 +5,7 @@ import { useAuth } from "../../AuthContext";
 // game constants
 const NUM_ROUNDS = 1;
 
-function LicensePlateGame() {
+function LicensePlateGame({ gameId }) {
   const { isAuthenticated, user } = useAuth();
 
   // stats
@@ -86,10 +86,19 @@ function LicensePlateGame() {
 
   const getAccuracy = () => {
     if (numCorrect === 0 && round === 1) {
-      return "---"
+      return 0;
     } else {
       const denom = (stage === "guessing" || stage === "showing") ? round - 1 : round;
-      return `${Math.round((100 * numCorrect / denom) * 10) / 10}%`;
+      return numCorrect / denom;
+    }
+  }
+
+  const getAccuracyFormatted = () => {
+    const acc = getAccuracy();
+    if (acc == null) {
+      return "---"
+    } else {
+      return `${Math.round(100 * acc * 10) / 10}%`;
     }
   }
 
@@ -129,12 +138,31 @@ function LicensePlateGame() {
     }
   };
 
-  const finishGame = () => {
+  const finishGame = async () => {
     setStage("finished");
 
     /* TODO: store results on database */
-    console.log(isAuthenticated);
+    if (!isAuthenticated) return;
+    const userId = user.id;
     console.log(user);
+
+    const res = await fetch("/api/user-game-stats", {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({
+        userId: userId,
+        gameId: gameId,
+        score: getScore(),
+        accuracy: getAccuracy(),
+        timeTaken: time,
+        datePlayed: new Date().toISOString(),
+      }),
+    });
+    const json = await res.json();
+    console.log(res);
+    console.log(json);
   };
 
   const renderBasedOnPlayingStage = () => {
@@ -142,7 +170,7 @@ function LicensePlateGame() {
       return (
         <>
           <p className="plate-number">{plate}</p>
-          <button onClick={hidePlateNumber} class="hide-plate">Memorized!</button>
+          <button onClick={hidePlateNumber} className="hide-plate">Memorized!</button>
         </>
       );
     } else if (stage === "guessing" || stage === "evaluating") {
@@ -179,7 +207,7 @@ function LicensePlateGame() {
       return (
         <div className="results">
           <p>Time: {formatTime(time)} </p>
-          <p>Accuracy: {getAccuracy()}</p>
+          <p>Accuracy: {getAccuracyFormatted()}</p>
           <p>Score: {getScore()}</p>
         </div>
       );
@@ -189,7 +217,7 @@ function LicensePlateGame() {
           <div className="stats">
             <p>Round: {round}/{NUM_ROUNDS}</p>
             <p>Time: {formatTime(time)} </p>
-            <p>Accuracy: {getAccuracy()}</p>
+            <p>Accuracy: {getAccuracyFormatted()}</p>
           </div>
           <div className="game-container">
             {renderBasedOnPlayingStage()}

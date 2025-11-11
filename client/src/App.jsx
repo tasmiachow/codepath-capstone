@@ -14,7 +14,7 @@ import { AuthProvider } from "./AuthContext.jsx";
 
 const GAME_ROUTES = {
   // [gameId]: component
-  1: <LicensePlateGame />
+  1: <LicensePlateGame gameId={1} />
 };
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
             <Route path="games">
               <Route index element={<GamesPage />} />
               {Object.entries(GAME_ROUTES).map(([gameId, component], index) => {
-                return <Route path={gameId} element={component} key={index} />;
+                return <Route path={gameId} element={component}  key={index} />;
               })}
             </Route>
           </Route>
