@@ -145,6 +145,7 @@ function LicensePlateGame() {
         <>
           <form>
             <input
+              autoFocus={true}
               type="text"
               placeholder="Enter guess"
               value={guess}
