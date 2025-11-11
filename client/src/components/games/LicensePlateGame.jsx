@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
-import { clamp, randomInt } from "../../util";
+import { randomInt } from "../../util";
 
 // game constants
 const NUM_ROUNDS = 5;
-const INIT_SHOW_TIME = 2000;   // in ms
-const SHOW_TIME_MIN = 500;
-const SHOW_TIME_MAX = 5000;
-const SHOW_TIME_INC = 100;
 
 function LicensePlateGame() {
   // stats
   const [round, setRound] = useState(1);
   const [numCorrect, setNumCorrect] = useState(0);
-  // const [time, setTime] = useState(0);
 
   // not playing, showing, guessing, evaluating, finished
   const [stage, setStage] = useState("not playing");
+  // keep track of the generated license plate number
   const [plate, setPlate] = useState("");
+  // keep track of the user's guess
   const [guess, setGuess] = useState("");
-  const [showTime, setShowTime] = useState(INIT_SHOW_TIME);
+  // keep track of the element that says "correct" or "incorrect"
   const [feedback, setFeedback] = useState(<></>);
 
-  // const [timeInt, setTimeInt] = useState(0);
+  // timer
   const [time, setTime] = useState(0);    // in ms
   const [referenceTime, setReferenceTime] = useState(Date.now());
   const [timerOn, setTimerOn] = useState(false);
@@ -36,19 +33,12 @@ function LicensePlateGame() {
   };
 
   useEffect(() => {
-    console.log(timerOn);
     if (timerOn) {
       setTimeout(timerStep, 100);
     }
   }, [time, timerOn]);
 
-  // TODO - make component not rerender every time this changes!
-  // const timer = () => {
-  //   setTime(currentTime => currentTime + 0.1);
-  // };
-
   const beginGame = () => {
-    // setTimeInt(setInterval(timer, 100));
     setTimerOn(true);
     showPlateNumber();
   };
@@ -67,10 +57,11 @@ function LicensePlateGame() {
   const showPlateNumber = () => {
     setStage("showing");
     newPlateNumber();
-    setTimeout(() => {
-      setStage("guessing");
-    }, showTime);
   };
+
+  const hidePlateNumber = () => {
+    setStage("guessing");
+  }
 
   const isGuessCorrect = (guess, answer) => {
     return guess.toLowerCase().replaceAll(" ", "") === answer.toLowerCase().replaceAll(" ", "");
@@ -100,7 +91,7 @@ function LicensePlateGame() {
   }
 
   const getScore = () => {
-    return numCorrect ** 2 / time ** 2;
+    return Math.round(1000 * (numCorrect) ** 2 / (time / 1000));
   }
 
   const onSubmit = (e) => {
@@ -143,7 +134,12 @@ function LicensePlateGame() {
 
   const renderBasedOnPlayingStage = () => {
     if (stage === "showing") {
-      return <p className="plate-number">{plate}</p>;
+      return (
+        <>
+          <p className="plate-number">{plate}</p>
+          <button onClick={hidePlateNumber} class="hide-plate">Memorized!</button>
+        </>
+      );
     } else if (stage === "guessing" || stage === "evaluating") {
       return (
         <>
