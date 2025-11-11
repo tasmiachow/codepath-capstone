@@ -54,11 +54,11 @@ By combining psychology-inspired mini games with visual analytics, our goal is t
 
 ## 🎮 Game List
 
-| Game                       | Description                                          | Skills Tested      |
-| -------------------------- | ---------------------------------------------------- | ------------------ |
-| **Memory Tiles**           | Flip and match pairs.                                | Short-term memory  |
-| **License Plate Recall**   | Show a random plate for 3 seconds, user retypes it.  | Visual recall      |
-| **Quick Math**             | Timed +, −, ×, ÷ problems.                           | Speed & accuracy   |
+| Game                          | Description                                          | Skills Tested      |
+| --------------------------    | ---------------------------------------------------- | ------------------ |
+| **Memory Tiles**              | Flip and match pairs.                                | Short-term memory  |
+| ✅ **License Plate Recall**   | Show a random plate for 3 seconds, user retypes it.  | Visual recall      |
+| **Quick Math**                | Timed +, −, ×, ÷ problems.                           | Speed & accuracy   |
 
 ---
 
