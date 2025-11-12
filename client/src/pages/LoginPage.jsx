@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const LoginPage = () => {
+  const { login } =  useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
@@ -34,7 +36,7 @@ const LoginPage = () => {
       if (!res.ok) throw new Error(data?.error || "Login failed");
       if (!data?.token) throw new Error("No token returned from server");
 
-      localStorage.setItem("token", data.token);
+      login(data.token, data.user);
       // navigate after token is stored
       navigate("/dashboard", { replace: true });
     } catch (err) {

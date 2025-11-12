@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useAuth } from "../AuthContext";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
-const SignInPage = () => {
+const SignUpPage = () => {
+  const { login } = useAuth();
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [error, setError] = useState(null);
 
@@ -27,7 +29,7 @@ const SignInPage = () => {
         throw new Error("Unexpected server response");
       }
       if (!res.ok) throw new Error(data.error || "Signup failed");
-      localStorage.setItem("token", data.token);
+      login(data.token, data.user);
       window.location.href = "/dashboard";
     } catch (err) {
       setError(err.message);
@@ -90,4 +92,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignUpPage;
