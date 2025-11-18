@@ -88,9 +88,9 @@ function MathGame() {
     calculateOverallScore(score);
     return (
       <>
-        <h1>Game Over!</h1>
-        <h2>{score} out of {TOTAL}</h2>
-        <button onClick={startGame}>Play Again</button>
+        <h1 className="text-xl text-center">Game Over!</h1>
+        <h2 className="text-center">{score} out of {TOTAL}</h2>
+        <button onClick={startGame} className="btn">Play Again</button>
       </>
     );
   }
@@ -99,7 +99,10 @@ function MathGame() {
   if (!running) {
     return (
       <>
-        <button onClick={startGame}>Start Game</button>
+        <h1 className="text-center text-xl mb-4">Welcome to Speed Math</h1>
+      <div className="flex justify-center">
+        <button className="btn btn-primary bg-[#B2BFFE] hover:bg-blue-700 " onClick={startGame}>Start Game</button>
+      </div>
       </>
     );
   }
@@ -107,8 +110,8 @@ function MathGame() {
   // GAME ACTIVE
   return (
     <>
-      <h1 className="heading">Round {round} out of {TOTAL}</h1>
-      <h3>Difficulty: {difficulty}</h3>
+      <h1 className="text-xl text-center">Round {round} out of {TOTAL}</h1>
+      
 
       <CountDownTimer
         startTime={startTime}
@@ -116,14 +119,14 @@ function MathGame() {
         onExpire={nextRound}
       />
 
-      <h2>{question}</h2>
+      <h2 className="text-xl text-center">{question}</h2>
 
       <input
         type="number"
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         onKeyDown={submit}
-        className="input-lg"
+        className="input-lg outline"
       />
       <br></br>
 
