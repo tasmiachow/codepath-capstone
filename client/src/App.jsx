@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import RequireAuth from "./components/RequireAuth.jsx";
-
 import Layout from "./components/Layout.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
