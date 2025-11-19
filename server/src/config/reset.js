@@ -58,10 +58,21 @@ const createTables = async () => {
       added_at TIMESTAMP DEFAULT NOW(),
       UNIQUE (user_id, game_id)
     );
+
+    CREATE TABLE user_goals (
+      goal_id SERIAL PRIMARY KEY,
+      user_id INT NOT NULL,
+      game_id INT NOT NULL,
+      stat_name VARCHAR(20) NOT NULL,
+      stat_value INT NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE,
+      UNIQUE (user_id, game_id, stat_name)
+    );
   `;
 
   await pool.query(q);
-  console.log("✅ Tables (users,games,sessions,scores,favorites) created");
+  console.log("✅ Tables (users, games, sessions, scores, favorites, user_goals) created");
 };
 
 const seedData = async () => {

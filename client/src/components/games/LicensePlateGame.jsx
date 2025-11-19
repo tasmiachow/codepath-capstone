@@ -44,6 +44,7 @@ function LicensePlateGame({ gameId }) {
   }, [time, timerOn]);
 
   const beginGame = () => {
+    setGuess("");
     setTimerOn(true);
     setTime(0);
     setReferenceTime(Date.now());
@@ -127,9 +128,11 @@ function LicensePlateGame({ gameId }) {
     }
 
     if (isGuessCorrect(guess, plate)) {
+      console.log("Correct");
       setNumCorrect((currNumCorrect) => currNumCorrect + 1);
       setFeedback(<p className="text-success font-semibold">Correct</p>);
     } else {
+      console.log("Incorrect");
       setFeedback(
         <p className="text-error font-semibold">Incorrect ({plate})</p>
       );
@@ -185,24 +188,21 @@ function LicensePlateGame({ gameId }) {
     }
   };
 
-  const handleFormKeyDown = (e) => {
-    if (e.key !== "Enter") return;
-    // prevent default to avoid double submits / unwanted page reloads
-    e.preventDefault();
-    if (stage === "guessing") {
-      // call the same submit handler used by the form
-      onSubmit(e);
-    } else if (stage === "evaluating") {
-      // if we're viewing the result, Enter should advance to next
-      onNext();
-    }
-  };
-
   useEffect(() => {
-    if (stage !== "evaluating") return;
+    // if (stage !== "evaluating") return;
     const handler = (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
+      if (e.key !== "Enter") return;
+      // prevent default to avoid double submits / unwanted page reloads
+      e.preventDefault();
+      if (stage === "not playing" || stage === "finished") {
+        beginGame();
+      } else if (stage === "showing") {
+        hidePlateNumber();
+      } else if (stage === "guessing") {
+        // call the same submit handler used by the form
+        onSubmit(e);
+      } else if (stage === "evaluating") {
+        // if we're viewing the result, Enter should advance to next
         onNext();
       }
     };
@@ -224,7 +224,6 @@ function LicensePlateGame({ gameId }) {
         <>
           <form
             onSubmit={onSubmit}
-            onKeyDown={handleFormKeyDown}
             className="w-full flex flex-row gap-2"
           >
             <input

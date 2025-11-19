@@ -93,3 +93,25 @@ CREATE TABLE favorites (
 	UNIQUE (user_id, game_id)
 );
 ```
+### `user_goals` Table
+### `user_game_stats` Table
+
+| Column           | Type                            | Description                   |
+| ---------------- | ------------------------        | -------------------------     |
+| goal_id          | INT (PK)                        | Unique goal record            |
+| user_id          | INT (FK → users.user_id)        | Who's setting the goal        |
+| game_id      	   | INT (FK → games.game_id)        | Linked game                   |
+| stat_name        | VARCHAR                         | "Accuracy", "score", "time"   |
+| stat_value       | INT                             | The desired numeric goal      |
+```sql
+CREATE TABLE user_goals (
+	goal_id SERIAL PRIMARY KEY,
+	user_id INT NOT NULL,
+	game_id INT NOT NULL,
+	stat_name VARCHAR(20) NOT NULL,
+	stat_value INT NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(user_id),
+	FOREIGN KEY (game_id) REFERENCES games(game_id),
+	UNIQUE (user_id, game_id, stat_name)
+);
+```
