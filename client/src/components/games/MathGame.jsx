@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import CountDownTimer from "../components/CountDownTimer";
+import CountDownTimer from "../CountDownTimer";
+import { useAuth } from "../../AuthContext";
 
 function MathGame() {
   const TOTAL = 5;
@@ -34,10 +35,10 @@ function MathGame() {
       max = 10;
       ops = ["+"];
     } else if (difficulty === "medium") {
-      max = 20;
+      max = 15;
       ops = ["+", "-"];
     } else {
-      max = 50;
+      max = 30;
       ops = ["+", "-", "*"];
     }
 
