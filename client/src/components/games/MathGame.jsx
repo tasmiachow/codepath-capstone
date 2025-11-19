@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-import CountDownTimer from "../components/CountDownTimer";
+import CountDownTimer from "../CountDownTimer";
+import { useAuth } from "../../AuthContext";
 
-function MathGame() {
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
+function MathGame({gameId}) {
   const TOTAL = 5;
   const ROUND_TIME = 10000;
-
+  const { isAuthenticated, user } = useAuth();
   const [round, setRound] = useState(1);
   const [difficulty, setDifficulty] = useState("easy");
   const [question, setQuestion] = useState("");
@@ -27,6 +31,46 @@ function MathGame() {
     generateQuestion();
   }, [round, difficulty, running]);
 
+  useEffect(()=>{
+    if(gameOver){
+      saveGameStats();
+    }
+  },[gameOver]);
+
+  const saveGameStats = async() =>{
+    if(!isAuthenticated) return;
+    const calculatedScore = (score / TOTAL) * 100;
+
+    const payload = {
+      gameId: gameId,
+      score: calculatedScore,
+      accuracy: null, 
+      timeTaken: null, // <--- We explicitly send null
+      datePlayed: new Date().toISOString(),
+    };
+
+    try {
+      const res = await fetch(`${API_BASE}/api/user-game-stats`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        console.log("Stats saved:", json);
+        // Optional: Dispatch event for other components to update
+        window.dispatchEvent(new CustomEvent("user:stats:updated", { detail: json }));
+      }
+    } catch (err) {
+      console.error("Error saving game stats:", err);
+    }
+  };
+  
+
   function generateQuestion() {
     let max, ops;
 
@@ -34,10 +78,10 @@ function MathGame() {
       max = 10;
       ops = ["+"];
     } else if (difficulty === "medium") {
-      max = 20;
+      max = 15;
       ops = ["+", "-"];
     } else {
-      max = 50;
+      max = 30;
       ops = ["+", "-", "*"];
     }
 
@@ -90,7 +134,7 @@ function MathGame() {
       <>
         <h1 className="text-xl text-center">Game Over!</h1>
         <h2 className="text-center">{score} out of {TOTAL}</h2>
-        <button onClick={startGame} className="btn">Play Again</button>
+        <button onClick={startGame} className="btn btn-primary bg-[#B2BFFE] hover:bg-blue-700">Play Again</button>
       </>
     );
   }
@@ -117,20 +161,24 @@ function MathGame() {
         startTime={startTime}
         duration={ROUND_TIME}
         onExpire={nextRound}
+        className="mg-4"
       />
 
       <h2 className="text-xl text-center">{question}</h2>
-
+    <div className="flex justify-center">
       <input
         type="number"
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         onKeyDown={submit}
-        className="input-lg outline"
+        className="input-lg outline mg-4"
+        autoFocus
+
       />
       <br></br>
 
-      <button onClick={submit} className="btn">Next</button>
+      <button onClick={submit} className="btn btn-primary bg-[linear-gradient(0deg,#C6EF8D,#C6EF8D) mg-4">Next</button>
+      </div>
     </>
   );
 }

@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from "../../AuthContext";
 
-const TileGame = () => {
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
+
+const TileGame = ({gameId}) => {
   // --- STATE ---
+  const { isAuthenticated, user } = useAuth();
   const [pattern, setPattern] = useState([]);      // The correct path (e.g., [0, 4, 8])
   const [userIndex, setUserIndex] = useState(0);   // Which step of the pattern the user is on
   const [gameState, setGameState] = useState('idle'); // 'idle', 'computerTurn', 'playerTurn', 'gameOver'
@@ -38,6 +43,47 @@ const TileGame = () => {
       runComputerTurn();
     }
   }, [gameState]);
+
+  useEffect(()=>{
+   if(gameState === 'gameOver'){
+      saveGameStats();
+   }
+
+  }, [gameState]);
+
+  const saveGameStats = async()=>{
+    if(!isAuthenticated) return;
+
+  const roundsCompleted = Math.max(0, pattern.length - 1);
+    const finalScore = roundsCompleted * 10;
+
+    const payload = {
+      gameId: gameId,
+      score: finalScore,
+      accuracy: null,  
+      timeTaken: null, //  don't track time for this one
+      datePlayed: new Date().toISOString(),
+    };
+
+    try {
+      const res = await fetch(`${API_BASE}/api/user-game-stats`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        console.log("Memory Game stats saved:", json);
+        window.dispatchEvent(new CustomEvent("user:stats:updated", { detail: json }));
+      }
+    } catch (err) {
+      console.error("Error saving memory game stats:", err);
+    }
+  };
 
   // --- GAME LOGIC: Player's Turn ---
   const handleTileClick = async (clickedTileId) => {
