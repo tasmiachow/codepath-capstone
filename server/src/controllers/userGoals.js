@@ -3,78 +3,68 @@ import { buildUpdateQuery } from '../util.js';
 
 const createUserGoal = async (req, res) => {
     try {
-        const { user_id, game_id, stat_name, stat_value } = req.body;
-        // user_id, game_id validated by DB based on foreign key constraints!
-
-        // validate stat_name
-        if (typeof stat_name !== 'string') {
-            throw new Error("`stat_name` must be of type string.");
-        }
+        // 1. GET USER ID FROM TOKEN (via requireAuth middleware)
+        const user_id = req.user.id; 
         
-        if (stat_name.length > 20) {
-            throw new Error("`stat_name` must be of length 20 or less.");
-        }
+        const { game_id, stat_name, stat_value } = req.body;
 
-        // validate stat_value
-        if (typeof stat_value !== 'number') {
-            throw new Error("`stat_value` must be of type number.");
-        }
+        // 2. VALIDATE
+        if (!user_id) return res.status(401).json({ error: "Unauthorized" });
+        if (typeof stat_name !== 'string' || stat_name.length > 20) throw new Error("Invalid stat_name");
+        if (typeof stat_value !== 'number') throw new Error("Invalid stat_value");
 
+        // 3. INSERT
         const data = await pool.query(`
-            INSERT INTO user_goals
-            (user_id, game_id, stat_name, stat_value)
+            INSERT INTO user_goals (user_id, game_id, stat_name, stat_value)
             VALUES ($1, $2, $3, $4)
             RETURNING *;
         `, [user_id, game_id, stat_name, stat_value]);
-        res.status(200).json({ data: data.rows[0] });
+
+        // 4. RETURN DIRECT OBJECT (Matches Frontend)
+        res.status(200).json(data.rows[0]); 
+
     } catch (error) {
-        res.status(409).json({ error: error.message });
+        console.error("Create Goal Error:", error);
+        if (error.code === '23505') {
+            return res.status(409).json({ error: "Goal already exists" });
+        }
+        res.status(500).json({ error: error.message });
     }
 }
 
 const getUserGoals = async (req, res) => {
     try {
-        const { user_id } = req.body;
+        const user_id = req.user.id; // Get ID from token
 
         const data = await pool.query(`
             SELECT * FROM user_goals
             WHERE user_id = $1
             ORDER BY goal_id ASC;
         `, [user_id]);
-        res.status(200).json({ data: data.rows });
+        
+        // 5. RETURN DIRECT ARRAY (Matches Frontend)
+        // Do not wrap in { data: ... } or the frontend .map() will fail
+        res.status(200).json(data.rows); 
     } catch (error) {
-        res.status(409).json({ error: error.message });
+        console.error("Get Goals Error:", error);
+        res.status(500).json({ error: error.message });
     }
 };
 
 const updateUserGoal = async (req, res) => {
     try {
         const goalId = parseInt(req.params.goal_id);
-        if (isNaN(goalId)) throw new Error("Invalid `goal_id`");
+        if (isNaN(goalId)) throw new Error("Invalid goal_id");
 
-        const { stat_name, stat_value } = req.body;
-        // game_id is validated by the DB based on the foreign key constraints!
-
-        // validate stat_name
-        if (stat_name && typeof stat_name !== 'string') {
-            throw new Error("`stat_name` must be of type string.");
-        }
+        // Note: You might want to add "user_id" to the WHERE clause 
+        // to ensure users can only update their OWN goals.
         
-        if (stat_name && stat_name.length > 20) {
-            throw new Error("`stat_name` must be of length 20 or less.");
-        }
-
-        // validate stat_value
-        if (stat_value && typeof stat_value !== 'number') {
-            throw new Error("`stat_value` must be of type number.");
-        }
-
         const { query, values } = buildUpdateQuery(req.body, 'user_goals', {
             goal_id: goalId
         }, ['game_id', 'stat_name', 'stat_value']);
 
         const data = await pool.query(query, values);
-        res.status(200).json({ data: data.rows[0] });
+        res.status(200).json(data.rows[0]);
     } catch (error) {
         res.status(409).json({ error: error.message });
     }
@@ -83,14 +73,15 @@ const updateUserGoal = async (req, res) => {
 const deleteUserGoal = async (req, res) => {
     try {
         const goalId = parseInt(req.params.goal_id);
-        if (isNaN(goalId)) throw new Error("Invalid `goal_id`");
+        if (isNaN(goalId)) throw new Error("Invalid goal_id");
 
+        // Ensure user owns the goal before deleting (Optional but recommended)
         const data = await pool.query(`
             DELETE FROM user_goals
             WHERE goal_id = $1
             RETURNING *;
         `, [goalId]);
-        res.status(200).json({ data: data.rows[0] });
+        res.status(200).json(data.rows[0]);
     } catch (error) {
         res.status(409).json({ error: error.message });
     }

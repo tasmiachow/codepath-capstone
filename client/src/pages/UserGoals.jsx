@@ -17,10 +17,14 @@ const UserGoals = () => {
   const [loading, setLoading] = useState(true);
   const [filterGameId, setFilterGameId] = useState("ALL"); 
   
-  // Form State
-  const [statValue, setStatValue] = useState(""); // Maps to DB: stat_value
-  const [statName, setStatName] = useState("");   // Maps to DB: stat_name
-  const [selectedGameId, setSelectedGameId] = useState(KNOWN_GAMES[0].id); // Maps to DB: game_id
+  // Form State (Create)
+  const [statValue, setStatValue] = useState(""); 
+  const [statName, setStatName] = useState("");   
+  const [selectedGameId, setSelectedGameId] = useState(KNOWN_GAMES[0].id); 
+  
+  // Editing State (Update)
+  const [editingId, setEditingId] = useState(null); // ID of goal being edited
+  const [editValue, setEditValue] = useState("");   // The new value being typed
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -40,8 +44,6 @@ const UserGoals = () => {
       });
       if (res.ok) {
         const rawData = await res.json();
-        
-        // STRICT MAPPING: DB (snake_case) -> Frontend (camelCase)
         const formattedGoals = rawData.map(row => ({
             id: row.goal_id,          
             gameId: row.game_id,      
@@ -65,7 +67,6 @@ const UserGoals = () => {
     setIsSubmitting(true);
 
     try {
-      // STRICT PAYLOAD: Matches your CREATE TABLE schema exactly
       const payload = {
         game_id: Number(selectedGameId),
         stat_name: statName.trim(), 
@@ -83,18 +84,13 @@ const UserGoals = () => {
 
       if (res.ok) {
         const rawGoal = await res.json();
-        
-        // Add new goal to list using same strict mapping
         const newGoal = {
             id: rawGoal.goal_id,
             gameId: rawGoal.game_id,
             statName: rawGoal.stat_name,
             statValue: rawGoal.stat_value
         };
-
         setGoals((prev) => [newGoal, ...prev]); 
-        
-        // Reset Form
         setStatName("");
         setStatValue("");
       } else if (res.status === 409) {
@@ -111,7 +107,6 @@ const UserGoals = () => {
   };
 
   const handleDelete = async (goalId) => {
-    // Optimistic delete
     const prevGoals = [...goals];
     setGoals((prev) => prev.filter((g) => g.id !== goalId));
 
@@ -120,14 +115,51 @@ const UserGoals = () => {
         method: "DELETE",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      
-      if (!res.ok) {
-        throw new Error("Failed to delete");
-      }
+      if (!res.ok) throw new Error("Failed to delete");
     } catch (err) {
-      // Revert on error
       setGoals(prevGoals);
       console.error("Error deleting goal", err);
+    }
+  };
+
+  // --- UPDATE HANDLERS ---
+
+  const startEditing = (goal) => {
+    setEditingId(goal.id);
+    setEditValue(goal.statValue); // Pre-fill current score
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditValue("");
+  };
+
+  const handleUpdate = async (goalId) => {
+    // 1. Optimistic Update
+    const previousGoals = [...goals];
+    const updatedValue = Number(editValue);
+    
+    setGoals(prev => prev.map(g => g.id === goalId ? { ...g, statValue: updatedValue } : g));
+    setEditingId(null); // Close edit mode immediately
+
+    try {
+      // 2. API Call
+      const res = await fetch(`${API_BASE}/api/user-goals/${goalId}`, {
+        method: "PATCH",
+        headers: { 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}` 
+        },
+        body: JSON.stringify({ stat_value: updatedValue })
+      });
+
+      if (!res.ok) throw new Error("Failed to update");
+
+    } catch (err) {
+      // 3. Revert on Error
+      console.error("Update failed", err);
+      setGoals(previousGoals);
+      alert("Failed to update goal.");
     }
   };
 
@@ -187,7 +219,7 @@ const UserGoals = () => {
               </select>
             </div>
 
-            {/* Stat Value (Target Score) */}
+            {/* Stat Value */}
             <div className="form-control w-full md:w-1/4">
               <label className="label"><span className="label-text">Target Value</span></label>
               <input 
@@ -200,7 +232,7 @@ const UserGoals = () => {
               />
             </div>
 
-            {/* Stat Name (Constraint: VARCHAR(20)) */}
+            {/* Stat Name */}
             <div className="form-control w-full md:w-2/4">
               <label className="label"><span className="label-text">Stat Name (Max 20)</span></label>
               <input 
@@ -236,7 +268,7 @@ const UserGoals = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredGoals.map((goal) => (
-            <div key={goal.id} className="card bg-base-100 border border-base-300 shadow-sm">
+            <div key={goal.id} className="card bg-base-100 border border-base-300 shadow-sm transition-all hover:shadow-md">
               <div className="card-body flex-row items-center justify-between py-4 px-6">
                 
                 {/* Goal Info */}
@@ -246,16 +278,58 @@ const UserGoals = () => {
                       {getGameName(goal.gameId)}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold">
-                    {goal.statValue}
-                  </h3>
+
+                  {/* TOGGLE: Edit Input vs Display Text */}
+                  {editingId === goal.id ? (
+                    <div className="flex items-center gap-2 mt-1">
+                      <input 
+                        type="number" 
+                        className="input input-bordered input-sm w-24" 
+                        value={editValue}
+                        onChange={(e) => setEditValue(e.target.value)}
+                        autoFocus
+                      />
+                      <button 
+                        className="btn btn-sm btn-square btn-success text-white" 
+                        onClick={() => handleUpdate(goal.id)}
+                      >
+                        ✓
+                      </button>
+                      <button 
+                        className="btn btn-sm btn-square btn-ghost" 
+                        onClick={cancelEditing}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ) : (
+                    <h3 className="text-xl font-bold">
+                      {goal.statValue}
+                    </h3>
+                  )}
+
                   <p className="text-sm opacity-70 uppercase font-semibold tracking-wide">
                     {goal.statName}
                   </p>
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  
+                  {/* Edit Button (Only show if not currently editing) */}
+                  {editingId !== goal.id && (
+                    <button 
+                        onClick={() => startEditing(goal)}
+                        className="btn btn-square btn-ghost btn-sm text-info"
+                        title="Edit Score"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                    </button>
+                  )}
+
+                  {/* Delete Button */}
                   <button 
                     onClick={() => handleDelete(goal.id)}
                     className="btn btn-square btn-ghost btn-sm text-error hover:bg-error/10"
