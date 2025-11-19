@@ -7,7 +7,10 @@ import userGameStatsRoute from "./src/routes/userGameStats.js";
 import userGoalsRoute from "./src/routes/userGoals.js";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ["https://cogpath-frontend.onrender.com", "http://localhost:5173"],
+  credentials: true
+}));
 app.use(express.json());
 
 // Logging middleware
