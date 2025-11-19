@@ -4,6 +4,7 @@ import { useAuth } from "../../AuthContext";
 
 // game constants
 const NUM_ROUNDS = 5;
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 function LicensePlateGame({ gameId }) {
   const { isAuthenticated, user } = useAuth();
@@ -147,28 +148,38 @@ function LicensePlateGame({ gameId }) {
 
   const finishGame = async () => {
     setStage("finished");
+    setTimerOn(false);
 
-    /* TODO: store results on database */
     if (!isAuthenticated) return;
-    const userId = user.id;
 
-    const res = await fetch("/api/user-game-stats", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: userId,
-        gameId: gameId,
-        score: getScore(),
-        accuracy: getAccuracy(),
-        timeTaken: time,
-        datePlayed: new Date().toISOString(),
-      }),
-    });
+    const payload = {
+      gameId,
+      score: getScore(),
+      accuracy: getAccuracy(),
+      timeTaken: time,
+      datePlayed: new Date().toISOString(),
+    };
+
     try {
-      const json = await res.json();
-      console.log(res.status, json);
+      const res = await fetch(`${API_BASE}/api/user-game-stats`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // <-- ensure token sent
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const json = await res.json().catch(() => ({}));
+      console.log("store result", res.status, json);
+
+      if (res.ok) {
+        window.dispatchEvent(
+          new CustomEvent("user:stats:updated", { detail: json })
+        );
+      } else {
+        console.error("Store failed", json);
+      }
     } catch (err) {
       console.error("store result error", err);
     }
