@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-
 import RequireAuth from "./components/RequireAuth.jsx";
-
 import Layout from "./components/Layout.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -10,11 +8,15 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import GamesPage from "./pages/GamesPage.jsx";
 import LicensePlateGame from "./components/games/LicensePlateGame.jsx";
+import MathGame from "./components/games/MathGame.jsx";
+import TileGame from "./components/games/TileGame.jsx";
 import { AuthProvider } from "./AuthContext.jsx";
 
 const GAME_ROUTES = {
   // [gameId]: component
-  1: <LicensePlateGame gameId={1} />
+  1: <LicensePlateGame gameId={1} />,
+  2: <MathGame gameId={2} />,
+  3: <TileGame gameId={3} />
 };
 
 function App() {
