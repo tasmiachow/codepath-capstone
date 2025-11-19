@@ -8,42 +8,17 @@ const GamesPage = () => {
       <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <GameCard
           gameId={1}
-          title="TEMP: License Plate Guesser"
+          title="License Plate Recall"
           favorites={0}
         />
         <GameCard
-          gameId={1}
-          title="TEMP: License Plate Guesser"
+          gameId={2}
+          title="Speed Math"
           favorites={0}
         />{" "}
         <GameCard
-          gameId={1}
-          title="TEMP: License Plate Guesser"
-          favorites={0}
-        />
-        <GameCard
-          gameId={1}
-          title="TEMP: License Plate Guesser"
-          favorites={0}
-        />{" "}
-        <GameCard
-          gameId={1}
-          title="TEMP: License Plate Guesser"
-          favorites={0}
-        />{" "}
-        <GameCard
-          gameId={1}
-          title="TEMP: License Plate Guesser"
-          favorites={0}
-        />{" "}
-        <GameCard
-          gameId={1}
-          title="TEMP: License Plate Guesser"
-          favorites={0}
-        />{" "}
-        <GameCard
-          gameId={1}
-          title="TEMP: License Plate Guesser"
+          gameId={3}
+          title="Memory Tiles"
           favorites={0}
         />
       </div>
