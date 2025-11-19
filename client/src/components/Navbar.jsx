@@ -34,6 +34,9 @@ const Navbar = () => {
             <NavLink to="/games" className="btn btn-ghost text-md">
               Games
             </NavLink>
+            <NavLink to="/userGoals" className="btn btn-ghost text-md">
+              Goals
+            </NavLink>
           </>
         )}
 
