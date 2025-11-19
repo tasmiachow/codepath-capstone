@@ -23,10 +23,12 @@ function CountDownTimer({ startTime, duration, onExpire }) {
   }, [startTime, duration, onExpire]);
 
   return (
-  <div className="gap-x-4">
-      <AccessTimeRoundedIcon />
-      <h2>{Math.ceil(timeLeft / 1000)}</h2>
-  </div>
+  <div className="flex justify-center">
+  <div className="flex items-center gap-x-4">
+    <AccessTimeRoundedIcon />
+    <h2>{Math.ceil(timeLeft / 1000)}</h2>
+ </div>
+ </div>
   );
 }
 

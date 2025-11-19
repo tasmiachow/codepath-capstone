@@ -73,9 +73,9 @@ const seedData = async () => {
   ];
 
   const games = [
-    { slug: "memory-tiles", name: "Memory Tiles", category: "memory" },
+    { slug: "license-plate", name: "License Plate Recall", category: "memory" },
     { slug: "quick-math", name: "Quick Math", category: "math" },
-    { slug: "stroop", name: "Color Stroop", category: "focus" },
+    { slug: "memory-tiles", name: "Memory Tiles", category: "memory" },
   ];
 
   try {
