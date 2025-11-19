@@ -1,5 +1,8 @@
 import React from "react";
 import GameCard from "../components/GameCard";
+import LicsensPlatePic from "../assets/LicensePlate.png";
+import MemoryTilesPic from "../assets/MemoryTiles.png";
+import QuickMathPic from "../assets/QuickMath.png";
 
 const GamesPage = () => {
   // TODO: link up database to get game info
@@ -9,16 +12,19 @@ const GamesPage = () => {
         <GameCard
           gameId={1}
           title="License Plate Recall"
+          image={LicsensPlatePic}
           favorites={0}
         />
         <GameCard
           gameId={2}
           title="Speed Math"
+          image={QuickMathPic}
           favorites={0}
         />{" "}
         <GameCard
           gameId={3}
           title="Memory Tiles"
+          image={MemoryTilesPic}
           favorites={0}
         />
       </div>
