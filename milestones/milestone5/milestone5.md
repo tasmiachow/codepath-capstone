@@ -24,10 +24,10 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
 
 👉🏾👉🏾👉🏾 Check off each completed feature below.
 
-- [ ] The project includes an Express backend app and a React frontend app
+- [x] The project includes an Express backend app and a React frontend app
 - [ ] The project includes these backend-specific features:
   - [ ] At least one of each of the following database relationships in Postgres
-    - [ ] one-to-many
+    - [x] one-to-many
     - [ ] many-to-many with a join table
   - [ ] A well-designed RESTful API that:
     - [ ] supports all four main request types for a single entity (ex. tasks in a to-do list app): GET, POST, PATCH, and DELETE
@@ -36,15 +36,15 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
       - [ ] the user can **update** an existing item by changing some or all of its values, such as changing the title of task
       - [ ] the user can **delete** an existing item, such as a task
     - [ ] Routes follow proper naming conventions
-  - [ ] The web app includes the ability to reset the database to its default state
+  - [x] The web app includes the ability to reset the database to its default state
 - [ ] The project includes these frontend-specific features:
-  - [ ] At least one redirection, where users are able to navigate to a new page with a new URL within the app
-  - [ ] At least one interaction that the user can initiate and complete on the same page without navigating to a new page
-  - [ ] Dynamic frontend routes created with React Router
-  - [ ] Hierarchically designed React components
-    - [ ] Components broken down into categories, including Page and Component types
-    - [ ] Corresponding container components and presenter components as appropriate
-- [ ] The project includes dynamic routes for both frontend and backend apps
+  - [x] At least one redirection, where users are able to navigate to a new page with a new URL within the app
+  - [x] At least one interaction that the user can initiate and complete on the same page without navigating to a new page
+  - [x] Dynamic frontend routes created with React Router
+  - [x] Hierarchically designed React components
+    - [x] Components broken down into categories, including Page and Component types
+    - [x] Corresponding container components and presenter components as appropriate
+- [x] The project includes dynamic routes for both frontend and backend apps
 - [ ] The project is deployed on Render with all pages and features that are visible to the user are working as intended
 
 ### Custom Features
@@ -58,7 +58,7 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
 - [ ] The project includes a custom non-RESTful route with corresponding controller actions
 - [ ] The user can filter or sort items based on particular criteria as appropriate for your use case
 - [ ] Data is automatically generated in response to a certain event or user action. Examples include generating a default inventory for a new user starting a game or creating a starter set of tasks for a user creating a new task app account
-- [ ] Data submitted via a POST or PATCH request is validated before the database is updated (e.g. validating that an event is in the future before allowing a new event to be created)
+- [x] Data submitted via a POST or PATCH request is validated before the database is updated (e.g. validating that an event is in the future before allowing a new event to be created)
   - [ ] *To receive full credit, please be sure to demonstrate in your walkthrough that for certain inputs, the item will NOT be successfully created or updated.*
 
 ### Stretch Features
@@ -86,20 +86,20 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
 
 ### 1. What went well during this unit?
 
-[👉🏾👉🏾👉🏾 your answer here]
+We were able to pick up the pace in working towards our goals more than in previous weeks because our plan solidifed.
 
 ### 2. What were some challenges your group faced in this unit?
 
-[👉🏾👉🏾👉🏾 your answer here]
+We faced some challenges with finding enough time to work on the project. It turned out that a lot of us were busy over this past week, so that challenged our ability to work as much on the project as we originally hoped.
 
 ### 3. What were some of the highlights or achievements that you are most proud of in this project?
 
-[👉🏾👉🏾👉🏾 your answer here]
+We are most proud of our backend and frontend. The backend, while the simpler part of the project, manages multiple tables and routes as well as authentication. Our frontend is inviting and stylish, and that is where we spent most of our time because that is where our games reside.
 
 ### 4. Reflecting on your web development journey so far, how have you grown since the beginning of the course?
 
-[👉🏾👉🏾👉🏾 your answer here]
+We have grown in the sense of not only having more knowledge but also more skills. For instance, while we know how to do backend routes and authentication now, we also learned skills such as teamwork and project management, especially nailing a GitHub workflow that we didn't know how to implement during our solo projects at the beginning of the course. 
 
 ### 5. Looking ahead, what are your goals related to web development, and what steps do you plan to take to achieve them?
 
-[👉🏾👉🏾👉🏾 your answer here]
+Our goals include getting an internship or job as a frontend, backend, or full-stack engineer. We plan to continue on this project or create more passion projects to hone in our skills and strengthen our portfolio to secure an internship or job.
