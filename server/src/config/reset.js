@@ -14,6 +14,7 @@ const createTables = async () => {
     DROP TABLE IF EXISTS sessions CASCADE;
     DROP TABLE IF EXISTS games CASCADE;
     DROP TABLE IF EXISTS users CASCADE;
+    DROP TABLE IF EXISTS user_goals CASCADE;
 
     CREATE TABLE users (
       id SERIAL PRIMARY KEY,

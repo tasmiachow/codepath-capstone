@@ -6,6 +6,7 @@ import LandingPage from "./pages/LandingPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
+import UserGoals from "./pages/UserGoals.jsx";
 import GamesPage from "./pages/GamesPage.jsx";
 import LicensePlateGame from "./components/games/LicensePlateGame.jsx";
 import MathGame from "./components/games/MathGame.jsx";
@@ -33,6 +34,14 @@ function App() {
               element={
                 <RequireAuth>
                   <DashboardPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="userGoals"
+              element={
+                <RequireAuth>
+                  <UserGoals />
                 </RequireAuth>
               }
             />
