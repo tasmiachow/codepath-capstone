@@ -12,7 +12,7 @@ Designed and developed by: Krish A. Patel, Tasmia Chowdhury, and Ryan Lov
 
 ### **Description and Purpose**
 
-The **Cognitive Game Dashboard** is a web app that helps users sharpen their mental agility through fun, bite-sized cognitive games.  
+The **CogPath** is a web app that helps users sharpen their mental agility through fun, bite-sized cognitive games.  
 Players can test and improve their memory, attention, and problem-solving skills while tracking progress through charts and performance insights.
 
 The app gamifies brain training — turning cognitive growth into a daily habit.  
