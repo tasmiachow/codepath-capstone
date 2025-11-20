@@ -58,16 +58,18 @@ Demo of CRUD operations via goalsetting:
 
 | Game                             | Description                                          | Skills Tested      |
 | --------------------------       | ---------------------------------------------------- | ------------------ |
-| ✅ **Memory Tiles**              | Flip and match pairs.                                | Short-term memory  |
+| ✅ **Memory Grid**              | Flip and match pairs.                                | Short-term memory  |
 | ✅ **License Plate Recall**      | Show a random plate for 3 seconds, user retypes it.  | Visual recall      |
 | ✅ **Speed Math**                | Timed +, −, ×, ÷ problems.                           | Speed & accuracy   |
 
-Demo of Memory Tiles:
+Demo of Memory Grid:
+![Memory Grid](./assets/Memory_Grid_Demo_Web103_CapstoneProject.gif)
 
 Demo of License Plate Recall:
-![License Plate Recall](./assets/License_Plate_Game_Demo_Web103_CapstoneProject.gif)
+![License Plate Recall](./assets/License_Plate_Recall_Demo_Web103_CapstoneProject.gif)
 
 Demo of Speed Math:
+![Speed Math](./assets/Speed_Math_Demo_Web103_CapstoneProject.gif)
 
 ---
 
